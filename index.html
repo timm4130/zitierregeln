@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Zitierregeln üben – Tobias Elsäßer: Play</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap');
+:root{--ink:#1a1a1a;--paper:#f5f0e8;--cream:#ede8dc;--accent:#c0392b;--accent-light:#fdf0ef;--correct:#2d6a4f;--correct-light:#d8f3dc;--wrong:#c0392b;--wrong-light:#fde8e8;--neutral:#6b6560;--border:#ccc4b8;--chip-bg:#fff;--drop-bg:#f9f6f1;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--paper);color:var(--ink);font-family:'Source Serif 4',Georgia,serif;font-size:15px;line-height:1.7;min-height:100vh;padding-bottom:4rem;-webkit-user-select:none;user-select:none;}
+header{background:var(--ink);color:var(--paper);padding:1.5rem 1.5rem 1.25rem;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(255,255,255,.04) 28px,rgba(255,255,255,.04) 29px);pointer-events:none;}
+header h1{font-family:'Playfair Display',Georgia,serif;font-size:1.6rem;font-weight:700;position:relative;}
+header h1 em{color:var(--accent);font-style:italic;}
+header p{font-size:.82rem;color:rgba(245,240,232,.6);margin-top:.3rem;font-style:italic;position:relative;}
+.tabs{display:flex;background:#111;border-bottom:2px solid var(--accent);position:sticky;top:0;z-index:100;}
+.tab{flex:1;padding:.65rem .4rem;text-align:center;font-size:.72rem;font-family:'Source Serif 4',Georgia,serif;color:rgba(245,240,232,.5);cursor:pointer;border:none;background:none;transition:color .15s,background .15s;letter-spacing:.3px;touch-action:manipulation;line-height:1.3;}
+.tab:hover{color:var(--paper);}
+.tab.active{color:var(--paper);background:rgba(192,57,43,.2);border-bottom:2px solid var(--accent);margin-bottom:-2px;}
+.tab-num{display:block;font-size:.95rem;font-family:'Playfair Display',Georgia,serif;font-weight:700;color:var(--accent);}
+.section{display:none;max-width:720px;margin:0 auto;padding:1.5rem 1rem 3rem;}
+.section.active{display:block;}
+.intro-box{background:white;border:1px solid var(--border);border-radius:2px;padding:1rem 1.2rem;margin-bottom:1rem;font-size:.88rem;line-height:1.7;-webkit-user-select:text;user-select:text;}
+.intro-box ol{margin:.4rem 0 0 1.2rem;}
+.intro-box ol li{margin-bottom:.2rem;}
+.intro-box strong{color:var(--accent);}
+.source-label{font-size:.68rem;text-transform:uppercase;letter-spacing:2px;color:var(--neutral);margin-bottom:.4rem;font-weight:600;display:block;}
+.source-card{background:white;border:1px solid var(--border);border-radius:2px;overflow:hidden;margin-bottom:1.75rem;-webkit-user-select:text;user-select:text;}
+.source-header{padding:.9rem 1.2rem .75rem;border-bottom:1px solid var(--border);}
+.source-title{font-family:'Playfair Display',Georgia,serif;font-size:.95rem;font-weight:700;margin-bottom:.25rem;}
+.source-subtitle{font-style:italic;color:var(--neutral);font-size:.82rem;}
+.text-body{padding:.5rem 0;}
+.text-line{display:table;width:100%;table-layout:fixed;}
+.ln{display:table-cell;width:3.2rem;text-align:right;padding-right:.7rem;font-size:.68rem;color:var(--neutral);font-variant-numeric:tabular-nums;vertical-align:top;padding-top:.1rem;white-space:nowrap;-webkit-user-select:none;user-select:none;}
+.lc{display:table-cell;padding-right:1.2rem;font-size:.88rem;line-height:1.75;color:#2a2a2a;word-break:break-word;}
+.text-gap{height:.6rem;}
+.source-credit{padding:.6rem 1.2rem .8rem;font-size:.75rem;color:var(--neutral);border-top:1px solid var(--border);font-style:italic;}
+.prog-wrap{margin-bottom:1.25rem;}
+.prog-labels{display:flex;justify-content:space-between;font-size:.75rem;color:var(--neutral);margin-bottom:.35rem;}
+.prog-bar{background:var(--cream);border:1px solid var(--border);border-radius:99px;height:6px;overflow:hidden;}
+.prog-fill{background:var(--accent);height:100%;border-radius:99px;transition:width .4s ease;}
+.q-card{background:white;border:1px solid var(--border);border-radius:3px;padding:1.5rem 1.5rem 1.25rem;box-shadow:0 2px 10px rgba(0,0,0,.05);animation:fadeUp .3s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(7px);}to{opacity:1;transform:none;}}
+.q-badge{display:inline-block;font-size:.66rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);border:1px solid var(--accent-light);background:#fdf5f5;padding:.15rem .55rem;border-radius:2px;margin-bottom:.65rem;font-weight:600;}
+.q-title{font-family:'Playfair Display',Georgia,serif;font-size:1rem;font-weight:700;margin-bottom:.3rem;line-height:1.4;}
+.q-sub{font-size:.84rem;color:var(--neutral);margin-bottom:1.1rem;font-style:italic;line-height:1.5;-webkit-user-select:text;user-select:text;}
+.stmt-box{background:var(--cream);border-left:3px solid var(--border);border-radius:2px;padding:.8rem 1rem;margin-bottom:1.1rem;font-size:.88rem;line-height:1.75;font-style:italic;-webkit-user-select:text;user-select:text;}
+.tf-opts{display:flex;gap:.65rem;margin-bottom:1.1rem;}
+.tf-btn{flex:1;border:1.5px solid var(--border);border-radius:3px;padding:.6rem .9rem;cursor:pointer;font-size:.88rem;font-family:'Source Serif 4',Georgia,serif;background:white;display:flex;align-items:center;gap:.45rem;transition:border-color .15s,background .15s;touch-action:manipulation;}
+.tf-btn:hover:not(.tf-locked){border-color:var(--accent);background:var(--accent-light);}
+.tf-btn.tf-sel{border-color:var(--accent);background:var(--accent-light);}
+.tf-btn.tf-correct{border-color:var(--correct);background:var(--correct-light);}
+.tf-btn.tf-wrong{border-color:var(--wrong);background:var(--wrong-light);}
+.tf-btn.tf-locked{cursor:default;}
+.tf-radio{width:14px;height:14px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.tf-btn.tf-sel .tf-radio,.tf-btn.tf-correct .tf-radio{border-color:var(--correct);}
+.tf-btn.tf-wrong .tf-radio{border-color:var(--wrong);}
+.tf-btn.tf-sel .tf-radio::after,.tf-btn.tf-correct .tf-radio::after{content:'';width:6px;height:6px;border-radius:50%;background:var(--correct);}
+.tf-btn.tf-wrong .tf-radio::after{content:'';width:6px;height:6px;border-radius:50%;background:var(--wrong);}
+.mc-opts{display:flex;flex-direction:column;gap:.55rem;margin-bottom:1.1rem;}
+.mc-opt{border:1.5px solid var(--border);border-radius:3px;padding:.75rem .9rem;cursor:pointer;font-size:.86rem;line-height:1.6;background:white;transition:border-color .15s,background .15s,transform .1s;position:relative;-webkit-user-select:text;user-select:text;touch-action:manipulation;}
+.mc-opt:hover:not(.mc-locked){border-color:var(--accent);background:var(--accent-light);transform:translateX(2px);}
+.mc-opt.mc-sel{border-color:var(--accent);background:var(--accent-light);}
+.mc-opt.mc-correct{border-color:var(--correct);background:var(--correct-light);}
+.mc-opt.mc-wrong{border-color:var(--wrong);background:var(--wrong-light);}
+.mc-opt.mc-locked{cursor:default;}
+.mc-icon{position:absolute;right:.8rem;top:50%;transform:translateY(-50%);font-size:.95rem;display:none;}
+.mc-opt.mc-correct .mc-icon,.mc-opt.mc-wrong .mc-icon{display:block;}
+.btn-row{display:flex;gap:.65rem;align-items:center;flex-wrap:wrap;}
+.btn-check{background:var(--ink);color:var(--paper);border:none;padding:.6rem 1.4rem;border-radius:2px;font-size:.84rem;font-family:'Source Serif 4',Georgia,serif;cursor:pointer;transition:background .15s;touch-action:manipulation;}
+.btn-check:hover:not(:disabled){background:var(--accent);}
+.btn-check:disabled{opacity:.35;cursor:default;}
+.btn-next{background:transparent;color:var(--ink);border:1.5px solid var(--border);padding:.55rem 1.2rem;border-radius:2px;font-size:.84rem;font-family:'Source Serif 4',Georgia,serif;cursor:pointer;transition:border-color .15s;display:none;touch-action:manipulation;}
+.btn-next:hover{border-color:var(--ink);}
+.q-feedback{margin-top:.8rem;padding:.8rem 1rem;border-radius:2px;font-size:.84rem;line-height:1.6;display:none;border-left:3px solid transparent;}
+@keyframes feedIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+.q-feedback.show{display:block;animation:feedIn .2s ease;}
+.q-feedback.fb-ok{background:var(--correct-light);border-color:var(--correct);color:#1a3d2a;}
+.q-feedback.fb-err{background:var(--wrong-light);border-color:var(--wrong);color:#5c1a1a;}
+.q-feedback strong{display:block;margin-bottom:.2rem;}
+.score-screen{display:none;background:white;border:1px solid var(--border);border-radius:3px;padding:2rem 1.5rem;text-align:center;}
+.score-screen.show{display:block;animation:fadeUp .4s ease;}
+.score-screen h2{font-family:'Playfair Display',Georgia,serif;font-size:1.5rem;margin-bottom:.4rem;}
+.score-big{font-family:'Playfair Display',Georgia,serif;font-size:3.5rem;font-weight:700;color:var(--accent);line-height:1;margin:.8rem 0 .35rem;}
+.score-sub{color:var(--neutral);font-style:italic;margin-bottom:1.25rem;}
+.score-msg{font-size:.9rem;margin-bottom:1.5rem;line-height:1.6;max-width:440px;margin-left:auto;margin-right:auto;-webkit-user-select:text;user-select:text;}
+.score-msg.urgent{color:var(--wrong);font-weight:600;}
+.btn-restart{background:var(--ink);color:var(--paper);border:none;padding:.7rem 1.8rem;border-radius:2px;font-size:.88rem;font-family:'Source Serif 4',Georgia,serif;cursor:pointer;transition:background .15s;touch-action:manipulation;}
+.btn-restart:hover{background:var(--accent);}
+.touch-hint{font-size:.78rem;color:var(--neutral);font-style:italic;margin-bottom:1.1rem;text-align:center;padding:.55rem .9rem;background:white;border:1px solid var(--border);border-radius:3px;-webkit-user-select:text;user-select:text;}
+.task-card{background:white;border:1px solid var(--border);border-radius:3px;padding:1.5rem;margin-bottom:1.25rem;box-shadow:0 2px 8px rgba(0,0,0,.05);}
+.task-num{font-size:.66rem;text-transform:uppercase;letter-spacing:2px;color:var(--accent);font-weight:600;margin-bottom:.4rem;}
+.task-title{font-family:'Playfair Display',Georgia,serif;font-size:.98rem;font-weight:700;margin-bottom:.35rem;line-height:1.4;}
+.task-sub{font-size:.84rem;color:var(--neutral);font-style:italic;margin-bottom:1.1rem;line-height:1.55;-webkit-user-select:text;user-select:text;}
+.task-sub strong{color:var(--ink);font-style:normal;}
+.sec-lbl{font-size:.66rem;color:var(--neutral);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:.35rem;font-weight:600;}
+.word-bank{display:flex;flex-wrap:wrap;gap:.45rem;min-height:2.75rem;padding:.65rem;background:var(--drop-bg);border:1.5px dashed var(--border);border-radius:3px;margin-bottom:1.1rem;transition:border-color .15s,background .15s;}
+.word-bank.bank-over{border-color:var(--accent);background:var(--accent-light);}
+.chip{display:inline-flex;align-items:center;background:var(--chip-bg);border:1.5px solid var(--border);border-radius:3px;padding:.25rem .65rem;font-size:.84rem;font-family:'Source Serif 4',Georgia,serif;cursor:grab;touch-action:none;white-space:nowrap;transition:border-color .15s,box-shadow .15s;-webkit-user-select:none;user-select:none;}
+.chip:hover:not(.chip-locked){border-color:var(--accent);box-shadow:0 2px 7px rgba(0,0,0,.12);}
+.chip.chip-selected{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent);background:var(--accent-light);}
+.chip.chip-dragging{opacity:.3;}
+.chip.chip-locked{cursor:default;opacity:.45;}
+.drag-ghost{position:fixed;pointer-events:none;z-index:9999;background:white;border:1.5px solid var(--accent);border-radius:3px;padding:.25rem .65rem;font-size:.84rem;font-family:'Source Serif 4',Georgia,serif;box-shadow:0 4px 14px rgba(0,0,0,.2);white-space:nowrap;transform:rotate(2deg);-webkit-user-select:none;user-select:none;}
+.sentence-builder{display:flex;flex-wrap:wrap;align-items:center;gap:.35rem;padding:.8rem .9rem;background:var(--drop-bg);border:1px solid var(--border);border-radius:3px;margin-bottom:1.1rem;font-size:.88rem;line-height:2;-webkit-user-select:text;user-select:text;}
+.fixed-text{white-space:normal;word-break:break-word;}
+.drop-slot{display:inline-flex;align-items:center;justify-content:center;min-width:70px;height:1.95rem;border:1.5px dashed var(--border);border-radius:3px;background:white;padding:0 .45rem;transition:border-color .15s,background .15s;cursor:pointer;flex-shrink:0;-webkit-user-select:none;user-select:none;}
+.drop-slot.slot-over{border-color:var(--accent);background:var(--accent-light);border-style:solid;}
+.drop-slot.slot-filled{border-style:solid;border-color:#b0a898;}
+.drop-slot.slot-correct{border-color:var(--correct);background:var(--correct-light);cursor:default;}
+.drop-slot.slot-wrong{border-color:var(--wrong);background:var(--wrong-light);}
+.slot-inner{display:flex;align-items:center;gap:.2rem;font-size:.84rem;white-space:nowrap;}
+.slot-remove{font-size:.62rem;color:var(--neutral);cursor:pointer;padding:.1rem .15rem;border-radius:2px;line-height:1;}
+.slot-remove:hover{color:var(--accent);}
+.btn-reset{background:transparent;color:var(--neutral);border:1px solid var(--border);padding:.55rem 1.1rem;border-radius:2px;font-size:.82rem;font-family:'Source Serif 4',Georgia,serif;cursor:pointer;touch-action:manipulation;}
+.btn-reset:hover{border-color:var(--ink);color:var(--ink);}
+.btn-hint{font-size:.75rem;color:var(--neutral);font-style:italic;margin-left:auto;}
+.dd-feedback{margin-top:.9rem;padding:.8rem 1rem;border-radius:2px;font-size:.84rem;line-height:1.6;display:none;border-left:3px solid transparent;}
+.dd-feedback.show{display:block;animation:feedIn .2s ease;}
+.dd-feedback.fb-ok{background:var(--correct-light);border-color:var(--correct);color:#1a3d2a;}
+.dd-feedback.fb-err{background:var(--wrong-light);border-color:var(--wrong);color:#5c1a1a;}
+.dd-feedback strong{display:block;margin-bottom:.2rem;}
+.ft-card{background:white;border:1px solid var(--border);border-radius:3px;padding:1.5rem;margin-bottom:1.25rem;box-shadow:0 2px 8px rgba(0,0,0,.05);}
+.ft-num{font-size:.66rem;text-transform:uppercase;letter-spacing:2px;color:var(--accent);font-weight:600;margin-bottom:.4rem;}
+.ft-title{font-family:'Playfair Display',Georgia,serif;font-size:.98rem;font-weight:700;margin-bottom:.35rem;line-height:1.4;}
+.ft-desc{font-size:.86rem;color:var(--neutral);font-style:italic;margin-bottom:.45rem;line-height:1.6;-webkit-user-select:text;user-select:text;}
+.ft-desc strong{color:var(--ink);font-style:normal;}
+.ft-original{background:var(--cream);border-left:3px solid var(--border);border-radius:2px;padding:.75rem .9rem;margin-bottom:.9rem;font-size:.84rem;line-height:1.7;-webkit-user-select:text;user-select:text;}
+.ft-criteria{font-size:.76rem;color:var(--neutral);margin-bottom:.7rem;-webkit-user-select:text;user-select:text;}
+.ft-criteria span{display:inline-block;background:var(--cream);border:1px solid var(--border);border-radius:2px;padding:.1rem .4rem;margin:.12rem .18rem .12rem 0;font-size:.72rem;}
+textarea{width:100%;border:1.5px solid var(--border);border-radius:3px;padding:.7rem .9rem;font-size:.88rem;font-family:'Source Serif 4',Georgia,serif;line-height:1.7;resize:vertical;min-height:90px;background:white;color:var(--ink);transition:border-color .15s;-webkit-user-select:text;user-select:text;}
+textarea:focus{outline:none;border-color:var(--accent);}
+.ft-btn-row{display:flex;gap:.65rem;align-items:center;flex-wrap:wrap;margin-top:.65rem;}
+.btn-ki{background:var(--ink);color:var(--paper);border:none;padding:.6rem 1.4rem;border-radius:2px;font-size:.84rem;font-family:'Source Serif 4',Georgia,serif;cursor:pointer;transition:background .15s;display:flex;align-items:center;gap:.45rem;touch-action:manipulation;}
+.btn-ki:hover:not(:disabled){background:var(--accent);}
+.btn-ki:disabled{opacity:.35;cursor:default;}
+.btn-clear{background:transparent;color:var(--neutral);border:1px solid var(--border);padding:.55rem 1rem;border-radius:2px;font-size:.82rem;font-family:'Source Serif 4',Georgia,serif;cursor:pointer;touch-action:manipulation;}
+.btn-clear:hover{border-color:var(--ink);color:var(--ink);}
+.ki-result{margin-top:.9rem;padding:.9rem 1.1rem;border-radius:3px;font-size:.84rem;line-height:1.7;display:none;border:1px solid var(--border);-webkit-user-select:text;user-select:text;}
+.ki-result.show{display:block;animation:feedIn .25s ease;}
+.ki-result.ki-ok{background:var(--correct-light);border-color:var(--correct);color:#1a3d2a;}
+.ki-result.ki-partly{background:#fef9e7;border-color:#d4ac0d;color:#5a4a00;}
+.ki-result.ki-err{background:var(--wrong-light);border-color:var(--wrong);color:#5c1a1a;}
+.ki-head{font-family:'Playfair Display',Georgia,serif;font-size:.95rem;font-weight:700;margin-bottom:.4rem;}
+.loading-dots{display:inline-flex;gap:4px;align-items:center;}
+.loading-dots span{width:5px;height:5px;border-radius:50%;background:currentColor;animation:dot .9s infinite;}
+.loading-dots span:nth-child(2){animation-delay:.2s;}
+.loading-dots span:nth-child(3){animation-delay:.4s;}
+@keyframes dot{0%,80%,100%{opacity:.2;}40%{opacity:1;}}
+@media(max-width:500px){header h1{font-size:1.25rem;}.tabs{font-size:.65rem;}.tab-num{font-size:.85rem;}.sentence-builder{font-size:.82rem;}.chip{font-size:.78rem;padding:.22rem .55rem;}.drop-slot{min-width:54px;}.tf-opts{flex-direction:column;}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Zitieren üben – <em>Tobias Elsäßer: »Play«</em></h1>
+  <p>ZP10-Text 2023 · Textbelege und Zitate korrekt einsetzen</p>
+</header>
+<div class="tabs">
+  <button class="tab active" onclick="showTab('quiz',this)"><span class="tab-num">①</span>Wissen testen</button>
+  <button class="tab" onclick="showTab('drag',this)"><span class="tab-num">②</span>Zitate zusammensetzen</button>
+  <button class="tab" onclick="showTab('free',this)"><span class="tab-num">③</span>Selbst zitieren</button>
+</div>
+
+<div class="section active" id="sec-quiz">
+  <div class="intro-box">
+    <p>Teste hier dein Wissen zu den Zitierregeln – so wie sie in einer Klausur gebraucht werden.</p>
+    <ol>
+      <li><strong>Lies den Textauszug sorgfältig durch.</strong></li>
+      <li>Beantworte dann die Fragen.</li>
+      <li>Achte auf: Anführungszeichen · Zeilenangaben · Auslassungen <em>[…]</em> · eckige Klammern · Punkt nach der Quellenangabe.</li>
+    </ol>
+  </div>
+  <span class="source-label">Ausgangstext</span>
+  <div class="source-card">
+    <div class="source-header">
+      <div class="source-title">Tobias Elsäßer: <em>Play</em> (Textauszug)</div>
+      <div class="source-subtitle">Der 18-jährige Jonas hat Abitur gemacht und will mit Rucksack per Anhalter durch Deutschland reisen.</div>
+    </div>
+    <div class="text-body">
+      <div class="text-line"><span class="ln"></span><span class="lc">„Ich schreib dir eine Karte", sage ich und schultere meinen Rucksack. „Vielleicht auch zwei."</span></div>
+      <div class="text-line"><span class="ln"></span><span class="lc">„Übertreib es nicht mit deiner Fürsorge." Sie lacht und weint zugleich.</span></div>
+      <div class="text-line"><span class="ln">35</span><span class="lc">Meine Mutter ist der einzige Mensch, den ich kenne, der kein Smartphone besitzt. Sie hat nur ein</span></div>
+      <div class="text-line"><span class="ln"></span><span class="lc">uraltes Handy, von dem der Lack abblättert. Und das schaltet sie aus, wenn sie im Atelier steht,</span></div>
+      <div class="text-line"><span class="ln"></span><span class="lc">was sie in produktiven Zeiten bis in die tiefste Nacht tut. Sie ist ehrgeizig. Momentan auch sehr</span></div>
+      <div class="text-line"><span class="ln"></span><span class="lc">dünn, fast zerbrechlich. Sie isst kaum, wenn sie nicht weiterkommt. Sie redet weniger. Alles passiert innen.</span></div>
+      <div class="text-gap"></div>
+      <div class="text-line"><span class="ln">40</span><span class="lc">Obwohl ich versucht hab, mich auf das Nötigste zu beschränken, drückt das Gewicht des Rucksacks</span></div>
+      <div class="text-line"><span class="ln"></span><span class="lc">gegen meine Hüften. Er riecht noch immer nach feuchtem Keller, Vergangenheit und Abenteuer, sieht</span></div>
+      <div class="text-line"><span class="ln"></span><span class="lc">ramponiert und fleckig aus. Meine Mutter war mit ihm während des Studiums unterwegs. Sie hat</span></div>
+      <div class="text-line"><span class="ln"></span><span class="lc">viel gesehen, viel erlebt und erzählt davon gerne Geschichten. Abenteuer.</span></div>
+      <div class="text-gap"></div>
+      <div class="text-line"><span class="ln">45</span><span class="lc">Dann sagt sie auch, dass sie mich nicht beneidet, in dieser Zeit erwachsen zu werden, und gibt mir</span></div>
+      <div class="text-line"><span class="ln"></span><span class="lc">das Gefühl, etwas verpasst zu haben. Die guten alten Zeiten oder so. Unser Politiklehrer, Herr</span></div>
+      <div class="text-line"><span class="ln"></span><span class="lc">Mages, hat auch immer davon gesprochen, von dem Früher und Besser. Wahrscheinlich ist das so ein</span></div>
+      <div class="text-line"><span class="ln"></span><span class="lc">Generationen-Ding, dass man ab einem gewissen Alter nicht mehr mitkommt mit dem, was gerade passiert,</span></div>
+      <div class="text-line"><span class="ln"></span><span class="lc">und deshalb so überheblich daherredet, als müssten wir, die Neuen, um etwas trauern, was auf der</span></div>
+      <div class="text-line"><span class="ln">50</span><span class="lc">Timeline vor unserer Geburt liegt und damit verloren ist. Aber wie soll man um etwas trauern, das</span></div>
+      <div class="text-line"><span class="ln"></span><span class="lc">man nicht gekannt hat? Und was würde das bringen? Nichts.</span></div>
+      <div class="text-gap"></div>
+      <div class="text-line"><span class="ln"></span><span class="lc">Das Gute an meiner Mutter ist, dass sie es trotz ihrer Tränen ernst meint, dass ich mich nicht</span></div>
+      <div class="text-line"><span class="ln"></span><span class="lc">melden soll. Sie knüpft keine Bedingungen an ihre Liebe.</span></div>
+    </div>
+    <div class="source-credit">Tobias Elsäßer: <em>Play</em>. © Carlsen Verlag, Hamburg. – Textauszug aus der ZP10 Deutsch 2023 NRW.</div>
+  </div>
+  <div class="prog-wrap">
+    <div class="prog-labels"><span id="q-prog-txt">Frage 1 von 11</span><span id="q-prog-pts">0 Punkte</span></div>
+    <div class="prog-bar"><div class="prog-fill" id="q-prog-fill" style="width:9%"></div></div>
+  </div>
+  <div id="q-area"></div>
+  <div class="score-screen" id="q-score">
+    <h2 id="q-score-title">Fertig!</h2>
+    <div class="score-big" id="q-score-big"></div>
+    <div class="score-sub" id="q-score-sub"></div>
+    <div class="score-msg" id="q-score-msg"></div>
+    <button class="btn-restart" onclick="quizRestart()">↺ Nochmal</button>
+  </div>
+</div>
+
+<div class="section" id="sec-drag">
+  <p class="touch-hint">📱 <strong>Tablet/Handy:</strong> Baustein antippen → leuchtet auf → Lücke antippen. &nbsp;🖥 <strong>Desktop:</strong> Bausteine in Lücken ziehen oder klicken.</p>
+  <div class="task-card" id="ddt-1">
+    <div class="task-num">Aufgabe 1 · Direktes Zitat</div>
+    <div class="task-title">Baue ein korrektes direktes Zitat zusammen.</div>
+    <div class="task-sub">Jonas beschreibt den Rucksack seiner Mutter. Setze die fehlenden Bausteine ein.</div>
+    <div class="sec-lbl">Bausteine</div><div class="word-bank" id="ddbank-1"></div>
+    <div class="sec-lbl">Dein Satz</div>
+    <div class="sentence-builder" id="ddbuild-1">
+      <span class="fixed-text">Jonas beschreibt den Rucksack:</span>
+      <span class="drop-slot" data-idx="0"></span>
+      <span class="fixed-text">Er riecht noch immer nach feuchtem Keller, Vergangenheit und Abenteuer</span>
+      <span class="drop-slot" data-idx="1"></span><span class="drop-slot" data-idx="2"></span><span class="drop-slot" data-idx="3"></span>
+    </div>
+    <div class="btn-row"><button class="btn-check" id="ddbtn-1" onclick="ddCheck(1)" disabled>✓ Überprüfen</button><button class="btn-reset" onclick="ddReset(1)">↺ Zurücksetzen</button><span class="btn-hint" id="ddhint-1">Alle Lücken füllen</span></div>
+    <div class="dd-feedback" id="ddfb-1"></div>
+  </div>
+  <div class="task-card" id="ddt-2">
+    <div class="task-num">Aufgabe 2 · Auslassung kennzeichnen</div>
+    <div class="task-title">Wo gehören Auslassungspunkte und Zeilenangabe hin?</div>
+    <div class="task-sub">Jonas' Gedanken werden mit einer Auslassung zitiert. Setze die richtigen Bausteine ein.</div>
+    <div class="sec-lbl">Bausteine</div><div class="word-bank" id="ddbank-2"></div>
+    <div class="sec-lbl">Dein Satz</div>
+    <div class="sentence-builder" id="ddbuild-2">
+      <span class="fixed-text">Jonas meint, es sei wohl ein „Generationen-Ding, dass man ab einem gewissen Alter nicht mehr mitkommt</span>
+      <span class="drop-slot" data-idx="0"></span>
+      <span class="fixed-text">und deshalb so überheblich daherredet"</span>
+      <span class="drop-slot" data-idx="1"></span><span class="drop-slot" data-idx="2"></span>
+    </div>
+    <div class="btn-row"><button class="btn-check" id="ddbtn-2" onclick="ddCheck(2)" disabled>✓ Überprüfen</button><button class="btn-reset" onclick="ddReset(2)">↺ Zurücksetzen</button><span class="btn-hint" id="ddhint-2">Alle Lücken füllen</span></div>
+    <div class="dd-feedback" id="ddfb-2"></div>
+  </div>
+  <div class="task-card" id="ddt-3">
+    <div class="task-num">Aufgabe 3 · Konjunktiv I im eingebetteten Zitat</div>
+    <div class="task-title">Welche Verbform ist korrekt – und wo gehört die Zeilenangabe hin?</div>
+    <div class="task-sub">Jonas sagt, dass seine Mutter keine Bedingungen an ihre Liebe stellt. Das soll als eingebettetes Zitat mit Konjunktiv I formuliert werden.</div>
+    <div class="sec-lbl">Bausteine</div><div class="word-bank" id="ddbank-3"></div>
+    <div class="sec-lbl">Dein Satz</div>
+    <div class="sentence-builder" id="ddbuild-3">
+      <span class="fixed-text">Jonas sagt, dass seine Mutter „keine Bedingungen an ihre Liebe"</span>
+      <span class="drop-slot" data-idx="0"></span>
+      <span class="drop-slot" data-idx="1"></span><span class="drop-slot" data-idx="2"></span>
+    </div>
+    <div class="btn-row"><button class="btn-check" id="ddbtn-3" onclick="ddCheck(3)" disabled>✓ Überprüfen</button><button class="btn-reset" onclick="ddReset(3)">↺ Zurücksetzen</button><span class="btn-hint" id="ddhint-3">Alle Lücken füllen</span></div>
+    <div class="dd-feedback" id="ddfb-3"></div>
+  </div>
+</div>
+
+<div class="section" id="sec-free">
+  <div class="intro-box" style="margin-bottom:1.25rem;">
+    <p>Jetzt zitierst du selbst. Schreibe deinen Satz ins Textfeld — eine KI bewertet ihn anschließend nach den Zitierregeln.</p>
+  </div>
+  <div class="ft-card">
+    <div class="ft-num">Aufgabe 1 · Direktes Zitat</div>
+    <div class="ft-title">Beschreibe die gemischten Gefühle der Mutter beim Abschied, indem du den folgenden Satz direkt zitierst.</div>
+    <div class="ft-original">„Sie lacht und weint zugleich." (Z. 34)</div>
+    <div class="ft-criteria">Kriterien: <span>Anführungszeichen</span><span>Z. 34</span><span>Punkt nach Klammer</span><span>sinnvoller Kontext</span></div>
+    <textarea id="ft1" placeholder="Schreibe hier deinen Satz …" oninput="ftChanged(1)"></textarea>
+    <div class="ft-btn-row"><button class="btn-ki" id="ftbtn-1" onclick="ftCheck(1)" disabled>✦ KI-Feedback</button><button class="btn-clear" onclick="ftClear(1)">↺ Löschen</button></div>
+    <div class="ki-result" id="ftr-1"></div>
+  </div>
+  <div class="ft-card">
+    <div class="ft-num">Aufgabe 2 · Direktes Zitat mit Auslassung</div>
+    <div class="ft-title">Beschreibe den Rucksack als Symbol für gelebtes Abenteuer und Aufbruch, indem du die folgende Textstelle mit einer sinnvollen Auslassung durch […] zitierst.</div>
+    <div class="ft-original">„Er riecht noch immer nach feuchtem Keller, Vergangenheit und Abenteuer, sieht ramponiert und fleckig aus." (Z. 41f.)</div>
+    <div class="ft-criteria">Kriterien: <span>Anführungszeichen</span><span>[…] für Auslassung</span><span>Z. 41f.</span><span>Punkt nach Klammer</span><span>Satzbau korrekt</span></div>
+    <textarea id="ft2" placeholder="Schreibe hier deinen Satz …" oninput="ftChanged(2)"></textarea>
+    <div class="ft-btn-row"><button class="btn-ki" id="ftbtn-2" onclick="ftCheck(2)" disabled>✦ KI-Feedback</button><button class="btn-clear" onclick="ftClear(2)">↺ Löschen</button></div>
+    <div class="ki-result" id="ftr-2"></div>
+  </div>
+  <div class="ft-card">
+    <div class="ft-num">Aufgabe 3 · Indirektes Zitat im Konjunktiv I</div>
+    <div class="ft-title">Gib die direkte Rede der Mutter als indirektes Zitat im Konjunktiv I wieder.</div>
+    <div class="ft-original">„Übertreib es nicht mit deiner Fürsorge." (Z. 34)</div>
+    <div class="ft-criteria">Kriterien: <span>Keine Anführungszeichen</span><span>vgl. Z. 34</span><span>Konjunktiv I</span><span>Sinngemäße Wiedergabe</span><span>Punkt nach Klammer</span></div>
+    <textarea id="ft3" placeholder="Schreibe hier deinen Satz …" oninput="ftChanged(3)"></textarea>
+    <div class="ft-btn-row"><button class="btn-ki" id="ftbtn-3" onclick="ftCheck(3)" disabled>✦ KI-Feedback</button><button class="btn-clear" onclick="ftClear(3)">↺ Löschen</button></div>
+    <div class="ki-result" id="ftr-3"></div>
+  </div>
+</div>
+
+<script>
+function showTab(id,el){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById('sec-'+id).classList.add('active');el.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+
+const QS=[
+  {type:'tf',badge:'Wahr oder Falsch?',title:'Das ist ein korrektes Zitat:',stmt:'Jonas beschreibt seine Mutter als besonders zielstrebig: sie sei „ehrgeizig" (Z. 38), allerdings auch „dünn, fast zerbrechlich" (Z. 39).',correct:true,ok:'Richtig! Zwei direkte Schlüsselwort-Zitate, beide mit Anführungszeichen und eigener Zeilenangabe – korrekt und präzise.',err:'Das ist tatsächlich korrekt: zwei direkte Zitate mit je eigener Zeilenangabe, Punkt am Ende nach der letzten Klammer.'},
+  {type:'tf',badge:'Wahr oder Falsch?',title:'Das ist ein korrektes Zitat:',stmt:'Die Mutter wird als besonders zielstrebige Person dargestellt (vgl. Z. 38).',correct:true,ok:'Genau! Indirektes Zitat: keine Anführungszeichen, aber Quellenangabe mit „vgl." – korrekt.',err:'Das ist korrekt. Sinnwiedergabe in eigenen Worten → keine Anführungszeichen, aber (vgl. Z. 38).'},
+  {type:'tf',badge:'Wahr oder Falsch?',title:'Das ist ein korrektes Zitat:',stmt:'Jonas empfindet den Rucksack als Abenteuer-Objekt – er riecht nach „feuchtem Keller, Vergangenheit und Abenteuer." (Z. 41)',correct:false,ok:'Richtig erkannt! Der Punkt muss <strong>nach</strong> der Klammer stehen, nicht davor. Korrekt: „feuchtem Keller, Vergangenheit und Abenteuer" (Z. 41).',err:'Hier ist ein Fehler: Der Punkt gehört <strong>nach</strong> die Klammer – nicht davor. Richtig: „feuchtem Keller, Vergangenheit und Abenteuer" (Z. 41).'},
+  {type:'tf',badge:'Wahr oder Falsch?',title:'Das ist ein korrektes indirektes Zitat:',stmt:'Jonas bemerkt, dass seine Mutter keine Bedingungen an ihre Liebe knüpft (vgl. Z. 50f.).',correct:true,ok:'Korrekt! „vgl." = Sinnwiedergabe. „Z. 50f." = Zeile 50 und die folgende. Alles richtig.',err:'Das ist tatsächlich korrekt: „vgl." für indirektes Zitat, „Z. 50f." für genau zwei Zeilen.'},
+  {type:'tf',badge:'Wahr oder Falsch?',title:'Das ist ein korrektes Zitat:',stmt:'Jonas empfindet die Haltung Älterer als herablassend: „als müssten wir, die Neuen, um etwas trauern, was auf der Timeline vor unserer Geburt liegt und damit verloren ist" (Z. 48f.).',correct:true,ok:'Richtig! Zitat grammatisch eingebettet, Anführungszeichen korrekt, „Z. 48f." für zwei Zeilen, Punkt nach der Klammer.',err:'Das ist tatsächlich korrekt – alles stimmt.'},
+  {type:'mc',badge:'Multiple Choice',title:'Wie gibt man im Fließtext an, dass Teile eines Zitats weggelassen wurden?',opts:['Mit drei Punkten: ...','Mit eckigen Klammern und drei Punkten: [...]','Mit runden Klammern und drei Punkten: (...)','Man lässt den Teil einfach weg.'],correct:1,ok:'Genau! Auslassungen: <strong>[…]</strong> – eckige Klammern zeigen, dass etwas fehlt.',err:'Auslassungen: <strong>[…]</strong> – nicht „...", nicht runde Klammern, nie ohne Kennzeichnung.'},
+  {type:'mc',badge:'Multiple Choice',title:'Welches Zitat ist korrekt in den Satz eingebettet?',sub:'Der Satz leitet mit indirekter Rede ein: Jonas bemerkt, dass der Rucksack …',opts:['Jonas bemerkt, dass der Rucksack „riecht noch immer nach feuchtem Keller" (Z. 41).','Jonas bemerkt, dass der Rucksack „noch immer nach feuchtem Keller" riecht (Z. 41).','Jonas bemerkt, dass der Rucksack „noch immer nach feuchtem Keller" rieche (Z. 41).','Jonas bemerkt den Rucksack: „Er riecht noch immer nach feuchtem Keller" (Z. 41).'],correct:2,ok:'Richtig! Option C: Bei indirekter Rede steht das Verb im <strong>Konjunktiv I</strong> – also „rieche". Das Zitat passt außerdem grammatisch in den Satz.',err:'Korrekt ist C: Indirekte Rede → Konjunktiv I: „rieche". Bei B fehlt der Konjunktiv, bei A und D stimmt der Satzbau nicht.'},
+  {type:'mc',badge:'Multiple Choice',title:'Wie kennzeichnet man eine Verbform, die im Zitat für indirekte Rede angepasst wurde?',sub:'Originaltext (Z. 39): „Alles passiert innen." – eingebettet in indirekte Rede: Jonas bemerkt, bei seiner Mutter …',opts:['Ohne Kennzeichnung verändern: „alles passiere innen" (Z. 39).','In eckige Klammern: „alles [passiere] innen" (Z. 39).','Man darf Wörter im Zitat nie verändern.','In runde Klammern: „alles (passiere) innen" (Z. 39).'],correct:1,ok:'Richtig! Die Anpassung „passiert" → „passiere" (Konjunktiv I) kommt in <strong>eckige Klammern</strong>: „alles [passiere] innen".',err:'Korrekt ist B: Anpassungen in <strong>eckige Klammern</strong>: „alles [passiere] innen" – runde Klammern oder keine Kennzeichnung sind falsch.'},
+  {type:'mc',badge:'Multiple Choice',title:'Wann schreibt man „vgl." vor der Zeilenangabe?',opts:['Immer, auch bei wörtlichen Zitaten.','Nur bei indirekten Zitaten – Sinnwiedergabe in eigenen Worten.','Nur wenn man mehr als eine Zeile zitiert.','Nur bei Gedichten, nicht bei Kurzgeschichten.'],correct:1,ok:'„Vgl." = indirektes Zitat: Sinnwiedergabe ohne Anführungszeichen. Bei wörtlichen Zitaten entfällt es.',err:'„Vgl." gehört nur zu <strong>indirekten Zitaten</strong> – wenn du den Inhalt sinngemäß in eigenen Worten wiedergibst.'},
+  {type:'mc',badge:'Multiple Choice',title:'Wo steht der Punkt am Ende eines Satzes mit Zitat?',sub:'Beispiel: Jonas beobachtet, dass seine Mutter „kaum isst" (Z. 38).',opts:['Direkt nach dem Anführungszeichen, vor der Klammer: „kaum isst." (Z. 38)','Gar nicht – die Zeilenangabe schließt den Satz ab.','Nach der schließenden Klammer: „kaum isst" (Z. 38).','Es gibt keinen festen Ort – beides ist möglich.'],correct:2,ok:'Genau! Der Punkt steht immer <strong>nach</strong> der Klammer: „…" (Z. XX). Häufige Fehlerquelle!',err:'Der Punkt kommt <strong>nach</strong> der Klammer – nicht davor. Die Quellenangabe gehört noch zum Satz.'},
+  {type:'mc',badge:'Multiple Choice',title:'Was bedeutet der Unterschied zwischen „Z. 40f." und „Z. 40ff."?',opts:['Kein Unterschied – beide Formen sind gleichwertig.','„Z. 40f." = Zeile 40 und die eine folgende; „Z. 40ff." = Zeile 40 und mehrere folgende.','„Z. 40f." = ungefähr Zeile 40; „Z. 40ff." = genau Zeile 40.','„f." steht für Gedichte, „ff." für Kurzgeschichten.'],correct:1,ok:'Genau! <strong>f.</strong> = eine weitere Zeile, <strong>ff.</strong> = mehrere weitere. Konkrete Angaben wie Z. 40–44 sind noch präziser.',err:'<strong>f.</strong> = genau eine folgende Zeile. <strong>ff.</strong> = mehrere folgende. Lieber konkret angeben wenn möglich.'},
+];
+
+let qCur=0,qScore=0,qAnswered=false,qSelTF=null,qSelMC=null,qRound=1;
+function quizRender(){
+  const q=QS[qCur],total=QS.length;
+  document.getElementById('q-prog-txt').textContent=`Frage ${qCur+1} von ${total}`;
+  document.getElementById('q-prog-pts').textContent=`${qScore} Punkt${qScore!==1?'e':''}`;
+  document.getElementById('q-prog-fill').style.width=`${(qCur/total*100)+(100/total)}%`;
+  qAnswered=false;qSelTF=null;qSelMC=null;
+  let h=`<div class="q-card"><div class="q-badge">${q.badge}</div><div class="q-title">${q.title}</div>`;
+  if(q.sub)h+=`<div class="q-sub">${q.sub}</div>`;
+  if(q.type==='tf'){h+=`<div class="stmt-box">${q.stmt}</div><div class="tf-opts"><button class="tf-btn" id="tf-w" onclick="qPickTF(true)"><span class="tf-radio"></span>Wahr</button><button class="tf-btn" id="tf-f" onclick="qPickTF(false)"><span class="tf-radio"></span>Falsch</button></div>`;}
+  else{h+=`<div class="mc-opts">`;q.opts.forEach((o,i)=>{h+=`<div class="mc-opt" id="mc-${i}" onclick="qPickMC(${i})">${o}<span class="mc-icon" id="mci-${i}"></span></div>`;});h+=`</div>`;}
+  h+=`<div class="btn-row"><button class="btn-check" id="q-btn-check" onclick="qCheck()" disabled>✓ Überprüfen</button><button class="btn-next" id="q-btn-next" onclick="qNext()" style="display:none">Weiter →</button></div><div class="q-feedback" id="q-fb"></div></div>`;
+  document.getElementById('q-area').innerHTML=h;
+}
+function qPickTF(v){if(qAnswered)return;qSelTF=v;document.getElementById('tf-w').className='tf-btn'+(v===true?' tf-sel':'');document.getElementById('tf-f').className='tf-btn'+(v===false?' tf-sel':'');document.getElementById('q-btn-check').disabled=false;}
+function qPickMC(i){if(qAnswered)return;qSelMC=i;document.querySelectorAll('.mc-opt').forEach((el,j)=>el.classList.toggle('mc-sel',j===i));document.getElementById('q-btn-check').disabled=false;}
+function qCheck(){
+  if(qAnswered)return;qAnswered=true;const q=QS[qCur];let ok=false;
+  if(q.type==='tf'){ok=(qSelTF===q.correct);const tw=document.getElementById('tf-w'),tf=document.getElementById('tf-f');[tw,tf].forEach(b=>b.classList.add('tf-locked'));(q.correct===true?tw:tf).classList.add('tf-correct');if(!ok)(qSelTF===true?tw:tf).classList.add('tf-wrong');}
+  else{ok=(qSelMC===q.correct);document.querySelectorAll('.mc-opt').forEach((el,i)=>{el.classList.add('mc-locked');if(i===q.correct){el.classList.add('mc-correct');document.getElementById(`mci-${i}`).textContent='✓';}if(i===qSelMC&&!ok){el.classList.add('mc-wrong');document.getElementById(`mci-${i}`).textContent='✗';}});}
+  if(ok)qScore++;document.getElementById('q-prog-pts').textContent=`${qScore} Punkt${qScore!==1?'e':''}`;
+  const fb=document.getElementById('q-fb');fb.className=`q-feedback show ${ok?'fb-ok':'fb-err'}`;fb.innerHTML=`<strong>${ok?'✓ Richtig!':'✗ Leider falsch.'}</strong>${ok?q.ok:q.err}`;
+  document.getElementById('q-btn-check').disabled=true;const nb=document.getElementById('q-btn-next');nb.style.display='block';nb.textContent=qCur<QS.length-1?'Weiter →':'Auswertung →';
+}
+function qNext(){qCur++;if(qCur>=QS.length){qShowScore();return;}quizRender();}
+function qShowScore(){
+  document.getElementById('q-area').innerHTML='';document.getElementById('q-prog-fill').style.width='100%';
+  const total=QS.length,pct=qScore/total;
+  document.getElementById('q-score').classList.add('show');
+  document.getElementById('q-score-big').textContent=`${qScore}/${total}`;
+  document.getElementById('q-score-sub').textContent=`${Math.round(pct*100)} % richtig`;
+  const msgEl=document.getElementById('q-score-msg');
+  if(qRound>=2&&pct<0.5){
+    document.getElementById('q-score-title').textContent='Noch nicht ganz!';
+    msgEl.className='score-msg urgent';
+    msgEl.textContent='Unter 50 % – bitte arbeite die Zitierregeln nochmal gründlich durch. Besonders: Punkt nach der Klammer, wann „vgl.", Konjunktiv I bei indirekter Rede, eckige Klammern für Anpassungen.';
+  }else if(pct>=.9){document.getElementById('q-score-title').textContent='Ausgezeichnet!';msgEl.className='score-msg';msgEl.textContent='Du beherrschst die Zitierregeln sehr sicher. Weiter zu Tab ② und ③!';}
+  else if(pct>=.7){document.getElementById('q-score-title').textContent='Gut gemacht!';msgEl.className='score-msg';msgEl.textContent='Schau dir die falsch beantworteten Fragen noch einmal an – dann bist du gut vorbereitet.';}
+  else if(pct>=.5){document.getElementById('q-score-title').textContent='Nicht schlecht.';msgEl.className='score-msg';msgEl.textContent='Einige Regeln sitzen noch nicht sicher. Wiederhole den Test – besonders Konjunktiv I, eckige Klammern und Punkt nach der Quellenangabe.';}
+  else{document.getElementById('q-score-title').textContent='Noch Luft nach oben.';msgEl.className='score-msg';msgEl.textContent='Übe die Regeln noch einmal gründlich: Punkt nach Klammer, wann „vgl.", Konjunktiv I, eckige Klammern.';}
+}
+function quizRestart(){qCur=0;qScore=0;qAnswered=false;qSelTF=null;qSelMC=null;qRound++;document.getElementById('q-score').classList.remove('show');document.getElementById('q-score-title').textContent='Fertig!';quizRender();}
+quizRender();
+
+// answer: array of accepted chip-ids per slot (string = single, array = multiple accepted)
+const DDT={
+  1:{
+    chips:[{id:'oa',label:'„'},{id:'ca',label:'"'},{id:'z41',label:'(Z. 41)'},{id:'punkt',label:'.'},{id:'dots',label:'...'},{id:'vgl41',label:'(vgl. Z. 41)'}],
+    answer:['oa','ca','z41','punkt'],
+    ok:'Perfekt! „ vor dem Zitat, " danach – dann (Z. 41) und der Punkt kommt als eigenes Zeichen <em>nach</em> der Klammer.',
+    err:'Noch nicht ganz. Öffnendes „ vor das Zitat, schließendes " dahinter, dann (Z. 41) und ganz am Ende den Punkt – er steht <em>nach</em> der Klammer.',
+  },
+  2:{
+    chips:[{id:'ellipsis',label:'[…]'},{id:'rdots',label:'(…)'},{id:'dots',label:'...'},{id:'z47ff',label:'(Z. 47ff.)'},{id:'z47',label:'(Z. 47)'},{id:'vgl47',label:'(vgl. Z. 47ff.)'},{id:'punkt',label:'.'}],
+    // slot 0: Auslassung – [… ] oder (…) beide ok; slot 1: Zeilenangabe; slot 2: Punkt
+    answer:[['ellipsis','rdots'],'z47ff','punkt'],
+    ok_ellipsis:'Sehr gut! Für <strong>digital verfasste Texte</strong> verwendet man <strong>[…]</strong> für Auslassungen. <strong>Handschriftlich</strong> werden runde Klammern (…) verwendet – beides ist richtig, je nach Medium.',
+    ok:'Sehr gut! Auslassung korrekt markiert, (Z. 47ff.) für mehrere folgende Zeilen, Punkt nach der Klammer – alles richtig.',
+    err:'Nicht ganz. Auslassungen: <strong>[…]</strong> (digital) oder <strong>(…)</strong> (handschriftlich) – nie nur „...". Dann (Z. 47ff.) und der Punkt <em>nach</em> der Klammer als eigenes Zeichen.',
+  },
+  3:{
+    chips:[{id:'knuepfe',label:'knüpfe'},{id:'knuepft',label:'knüpft'},{id:'z51',label:'(Z. 51)'},{id:'vgl51',label:'(vgl. Z. 51)'},{id:'punkt',label:'.'}],
+    answer:['knuepfe','z51','punkt'],
+    ok:'Richtig! „knüpfe" = Konjunktiv I. Zeilenangabe (Z. 51) ohne „vgl." – da wörtlich zitiert wird. Und der Punkt steht als eigenes Zeichen nach der Klammer.',
+    err:'Nicht ganz. Verb im <strong>Konjunktiv I</strong>: „knüpfe". Zeilenangabe (Z. 51) ohne „vgl." (da wörtliches Zitat). Punkt nach der Klammer.',
+  },
+};
+const ddSlots={1:[null,null,null,null],2:[null,null,null],3:[null,null,null]};
+const ddLocked={1:false,2:false,3:false};
+let ddActiveId=null,ddActiveTid=null,ddActiveFromSlot=null,ddGhost=null,ddDragging=false,ddStartX=0,ddStartY=0,ddGhostOffX=0,ddGhostOffY=0;
+const DD_THRESH=8;
+function ddShuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+function ddInit(){[1,2,3].forEach(tid=>{DDT[tid]._chips=ddShuffle(DDT[tid].chips);ddRenderBank(tid);ddRenderSlots(tid);});document.querySelectorAll('.drop-slot').forEach(el=>el.addEventListener('click',ddSlotClick));document.addEventListener('click',e=>{if(e.target.classList.contains('slot-remove'))ddReturnToBank(+e.target.dataset.tid,+e.target.dataset.idx);});}
+function ddRenderBank(tid){const bank=document.getElementById(`ddbank-${tid}`);bank.innerHTML='';const used=ddSlots[tid].filter(Boolean);DDT[tid]._chips.forEach(chip=>{if(used.includes(chip.id))return;const el=document.createElement('span');el.className='chip';el.textContent=chip.label;el.dataset.chipId=chip.id;el.dataset.tid=String(tid);el.dataset.fromSlot='';if(ddLocked[tid])el.classList.add('chip-locked');else el.addEventListener('pointerdown',ddPointerDown);bank.appendChild(el);});}
+function ddRenderSlots(tid){document.querySelectorAll(`#ddbuild-${tid} .drop-slot`).forEach((el,idx)=>{const chipId=ddSlots[tid][idx];el.classList.remove('slot-filled');if(!chipId){el.innerHTML='';return;}const chip=DDT[tid].chips.find(c=>c.id===chipId);el.classList.add('slot-filled');const isC=el.classList.contains('slot-correct');el.innerHTML=`<span class="slot-inner"><span>${chip.label}</span>${!ddLocked[tid]&&!isC?`<span class="slot-remove" data-tid="${tid}" data-idx="${idx}">✕</span>`:''}</span>`;});ddUpdateBtn(tid);}
+function ddUpdateBtn(tid){if(ddLocked[tid])return;const full=ddSlots[tid].every(s=>s!==null);document.getElementById(`ddbtn-${tid}`).disabled=!full;document.getElementById(`ddhint-${tid}`).textContent=full?'':'Alle Lücken füllen';}
+function ddPointerDown(e){const el=e.currentTarget,tid=+el.dataset.tid;if(ddLocked[tid])return;e.preventDefault();ddStartX=e.clientX;ddStartY=e.clientY;ddDragging=false;ddActiveId=el.dataset.chipId;ddActiveTid=tid;ddActiveFromSlot=el.dataset.fromSlot!==''?+el.dataset.fromSlot:null;el.setPointerCapture(e.pointerId);el.addEventListener('pointermove',ddPointerMove);el.addEventListener('pointerup',ddPointerUp);el.addEventListener('pointercancel',ddPointerCancel);ddMarkSelected(el,true);}
+function ddPointerMove(e){const dx=e.clientX-ddStartX,dy=e.clientY-ddStartY;if(!ddDragging&&Math.hypot(dx,dy)>DD_THRESH){ddDragging=true;ddClearSelected();const src=ddFindChipEl(ddActiveId,ddActiveTid);const r=src?src.getBoundingClientRect():e.currentTarget.getBoundingClientRect();ddGhostOffX=e.clientX-r.left;ddGhostOffY=e.clientY-r.top;ddGhost=document.createElement('div');ddGhost.className='drag-ghost';ddGhost.textContent=e.currentTarget.textContent;ddGhost.style.left=(e.clientX-ddGhostOffX)+'px';ddGhost.style.top=(e.clientY-ddGhostOffY)+'px';document.body.appendChild(ddGhost);if(src)src.classList.add('chip-dragging');}if(ddDragging&&ddGhost){ddGhost.style.left=(e.clientX-ddGhostOffX)+'px';ddGhost.style.top=(e.clientY-ddGhostOffY)+'px';ddHighlight(e.clientX,e.clientY);}}
+function ddPointerUp(e){ddCleanup(e.currentTarget,e.pointerId);if(ddDragging){const slot=ddHitSlot(e.clientX,e.clientY);if(slot)ddPlace(slot.tid,slot.idx);else if(ddHitBank(e.clientX,e.clientY)&&ddActiveFromSlot!==null)ddReturnToBank(ddActiveTid,ddActiveFromSlot);if(ddGhost){ddGhost.remove();ddGhost=null;}ddClearHighlights();const src=ddFindChipEl(ddActiveId,ddActiveTid);if(src)src.classList.remove('chip-dragging');ddDragging=false;ddActiveId=ddActiveTid=ddActiveFromSlot=null;}}
+function ddPointerCancel(e){ddCleanup(e.currentTarget,e.pointerId);if(ddGhost){ddGhost.remove();ddGhost=null;}ddClearHighlights();ddDragging=false;ddActiveId=ddActiveTid=ddActiveFromSlot=null;}
+function ddCleanup(el,pid){try{el.releasePointerCapture(pid);}catch(_){}el.removeEventListener('pointermove',ddPointerMove);el.removeEventListener('pointerup',ddPointerUp);el.removeEventListener('pointercancel',ddPointerCancel);}
+function ddSlotClick(e){const sl=e.currentTarget,tid=+sl.closest('.task-card').id.split('-')[1],idx=+sl.dataset.idx;if(ddLocked[tid]||ddDragging)return;if(ddActiveId!==null){ddPlace(tid,idx);ddClearSelected();ddActiveId=ddActiveTid=ddActiveFromSlot=null;}else if(ddSlots[tid][idx])ddReturnToBank(tid,idx);}
+function ddPlace(tid,idx){if(ddLocked[tid])return;if(ddSlots[tid][idx])ddReturnToBank(tid,idx);if(ddActiveFromSlot!==null){ddSlots[ddActiveTid][ddActiveFromSlot]=null;const old=document.querySelector(`#ddbuild-${ddActiveTid} .drop-slot[data-idx="${ddActiveFromSlot}"]`);if(old){old.classList.remove('slot-filled','slot-wrong','slot-correct');old.innerHTML='';}ddUpdateBtn(ddActiveTid);}ddSlots[tid][idx]=ddActiveId;ddRenderBank(tid);if(ddActiveTid!==tid)ddRenderBank(ddActiveTid);ddRenderSlots(tid);if(ddActiveTid!==tid)ddRenderSlots(ddActiveTid);}
+function ddReturnToBank(tid,idx){if(ddLocked[tid])return;ddSlots[tid][idx]=null;const sl=document.querySelector(`#ddbuild-${tid} .drop-slot[data-idx="${idx}"]`);if(sl)sl.classList.remove('slot-filled','slot-correct','slot-wrong');ddRenderBank(tid);ddRenderSlots(tid);}
+function ddHitSlot(x,y){for(const el of document.querySelectorAll('#sec-drag .drop-slot')){const tid=+el.closest('.task-card').id.split('-')[1];if(ddLocked[tid])continue;const r=el.getBoundingClientRect();if(x>=r.left&&x<=r.right&&y>=r.top&&y<=r.bottom)return{tid,idx:+el.dataset.idx,el};}return null;}
+function ddHitBank(x,y){for(const el of document.querySelectorAll('#sec-drag .word-bank')){const r=el.getBoundingClientRect();if(x>=r.left&&x<=r.right&&y>=r.top&&y<=r.bottom)return el;}return null;}
+function ddHighlight(x,y){document.querySelectorAll('#sec-drag .drop-slot').forEach(s=>s.classList.remove('slot-over'));document.querySelectorAll('#sec-drag .word-bank').forEach(b=>b.classList.remove('bank-over'));const sl=ddHitSlot(x,y);if(sl){sl.el.classList.add('slot-over');return;}const bk=ddHitBank(x,y);if(bk)bk.classList.add('bank-over');}
+function ddClearHighlights(){document.querySelectorAll('#sec-drag .drop-slot').forEach(s=>s.classList.remove('slot-over'));document.querySelectorAll('#sec-drag .word-bank').forEach(b=>b.classList.remove('bank-over'));}
+function ddMarkSelected(el,yes){ddClearSelected();if(yes)el.classList.add('chip-selected');}
+function ddClearSelected(){document.querySelectorAll('.chip').forEach(c=>c.classList.remove('chip-selected'));}
+function ddFindChipEl(id,tid){return document.querySelector(`#ddbank-${tid} .chip[data-chip-id="${id}"]`);}
+function ddSlotAccepts(tid,slotIdx,chipId){
+  const ans=DDT[tid].answer[slotIdx];
+  return Array.isArray(ans)?ans.includes(chipId):ans===chipId;
+}
+function ddCheck(tid){
+  if(ddLocked[tid])return;
+  let ok=true;
+  let usedRdots=false;
+  document.querySelectorAll(`#ddbuild-${tid} .drop-slot`).forEach((el,i)=>{
+    el.classList.remove('slot-correct','slot-wrong');
+    const placed=ddSlots[tid][i];
+    if(ddSlotAccepts(tid,i,placed)){
+      el.classList.add('slot-correct');
+      el.querySelectorAll('.slot-remove').forEach(r=>r.remove());
+      if(placed==='rdots')usedRdots=true;
+    }else{el.classList.add('slot-wrong');ok=false;}
+  });
+  const fb=document.getElementById(`ddfb-${tid}`);
+  if(ok){
+    ddLocked[tid]=true;
+    // Special feedback if handwritten variant (…) was used in task 2
+    let okMsg=DDT[tid].ok;
+    if(tid===2&&usedRdots&&DDT[tid].ok_ellipsis)okMsg=DDT[tid].ok_ellipsis;
+    fb.className='dd-feedback show fb-ok';
+    fb.innerHTML=`<strong>✓ Richtig!</strong>${okMsg}`;
+    document.getElementById(`ddbtn-${tid}`).disabled=true;
+    document.getElementById(`ddhint-${tid}`).textContent='';
+    document.querySelectorAll(`#ddbank-${tid} .chip`).forEach(c=>c.classList.add('chip-locked'));
+  }else{fb.className='dd-feedback show fb-err';fb.innerHTML=`<strong>✗ Noch nicht ganz.</strong>${DDT[tid].err}`;}
+}
+function ddReset(tid){ddLocked[tid]=false;ddSlots[tid]=ddSlots[tid].map(()=>null);document.querySelectorAll(`#ddbuild-${tid} .drop-slot`).forEach(s=>{s.classList.remove('slot-filled','slot-correct','slot-wrong','slot-over');s.innerHTML='';});ddClearSelected();if(ddActiveTid===tid)ddActiveId=ddActiveTid=ddActiveFromSlot=null;ddRenderBank(tid);ddRenderSlots(tid);const fb=document.getElementById(`ddfb-${tid}`);fb.className='dd-feedback';fb.innerHTML='';document.getElementById(`ddbtn-${tid}`).disabled=true;document.getElementById(`ddhint-${tid}`).textContent='Alle Lücken füllen';}
+ddInit();
+
+const FTP={
+  1:`Du bist ein Deutschlehrer und bewertest eine Schülerantwort.\nAuftrag: "Beschreibe die gemischten Gefühle der Mutter beim Abschied, indem du den Satz 'Sie lacht und weint zugleich' (Z. 34) direkt zitierst."\nKriterien: 1. Zitat in Anführungszeichen? 2. Zeilenangabe (Z. 34)? 3. Punkt NACH der Klammer? 4. Inhaltlich sinnvoller Kontext zu gemischten Gefühlen beim Abschied?\nAntworte auf Deutsch. Gesamteinschätzung (Richtig / Teilweise richtig / Überarbeiten), dann pro Kriterium ✓/✗ + kurze Erklärung, dann ein konkreter Tipp.`,
+  2:`Du bist ein Deutschlehrer und bewertest eine Schülerantwort.\nAuftrag: "Beschreibe den Rucksack als Symbol für gelebtes Abenteuer und Aufbruch, indem du die Textstelle 'Er riecht noch immer nach feuchtem Keller, Vergangenheit und Abenteuer, sieht ramponiert und fleckig aus.' (Z. 41f.) mit einer sinnvollen Auslassung durch [...] zitierst."\nKriterien: 1. Anführungszeichen korrekt? 2. Auslassung mit [...] vorhanden? 3. Zeilenangabe (Z. 41f. o.ä.)? 4. Punkt nach Klammer? 5. Satzbau korrekt? 6. Bezug auf Symbolik für Abenteuer/Aufbruch erkennbar?\nAntworte auf Deutsch. Gesamteinschätzung, dann pro Kriterium ✓/✗ + Erklärung, dann Tipp.`,
+  3:`Du bist ein Deutschlehrer und bewertest eine Schülerantwort.\nAuftrag: "Gib die direkte Rede der Mutter 'Übertreib es nicht mit deiner Fürsorge.' (Z. 34) als indirektes Zitat im Konjunktiv I wieder."\nKriterien: 1. Keine Anführungszeichen (indirekt)? 2. Quellenangabe (vgl. Z. 34)? 3. Konjunktiv I korrekt gebildet? 4. Inhalt sinngemäß? 5. Punkt nach Klammer?\nAntworte auf Deutsch. Gesamteinschätzung, dann pro Kriterium ✓/✗ + Erklärung, dann Tipp.`,
+};
+function ftChanged(n){document.getElementById(`ftbtn-${n}`).disabled=document.getElementById(`ft${n}`).value.trim().length<5;}
+function ftClear(n){document.getElementById(`ft${n}`).value='';document.getElementById(`ftbtn-${n}`).disabled=true;const r=document.getElementById(`ftr-${n}`);r.className='ki-result';r.innerHTML='';}
+async function ftCheck(n){
+  const ans=document.getElementById(`ft${n}`).value.trim();if(!ans)return;
+  const btn=document.getElementById(`ftbtn-${n}`);btn.disabled=true;btn.innerHTML='<span class="loading-dots"><span></span><span></span><span></span></span> wird bewertet …';
+  const r=document.getElementById(`ftr-${n}`);r.className='ki-result show';r.innerHTML='<em>KI liest deine Antwort …</em>';
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:800,system:FTP[n],messages:[{role:'user',content:`Schülerantwort: "${ans}"`}]})});
+    if(!res.ok){const err=await res.json().catch(()=>({}));throw new Error(err.error?.message||`HTTP ${res.status}`);}
+    const data=await res.json();
+    const text=data.content.map(b=>b.text||'').join('');
+    const up=text.toUpperCase();let cls='ki-partly';
+    if(up.includes('RICHTIG')&&!up.includes('TEILWEISE')&&!up.includes('ÜBERARBEITEN'))cls='ki-ok';
+    if(up.includes('ÜBERARBEITEN'))cls='ki-err';
+    r.className=`ki-result show ${cls}`;r.innerHTML=`<div class="ki-head">KI-Feedback</div><div>${text.replace(/\n/g,'<br>')}</div>`;
+  }catch(e){
+    r.className='ki-result show ki-err';
+    r.innerHTML=`<strong>Hinweis:</strong> Das KI-Feedback ist nur über den veröffentlichten Link verfügbar, nicht in der Vorschau. Fehlerdetail: ${e.message}`;
+  }
+  btn.innerHTML='✦ KI-Feedback';btn.disabled=false;
+}
+</script>
+</body>
+</html>
